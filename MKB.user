@@ -26,3 +26,74 @@
         jNode.css('background-color', 'yellow');
     }
 })();
+// ==UserScript==
+// @name         MKB (Make Kustomer Better)
+// @namespace    MKB
+// @version      100
+// @description  Make Kustomer Better
+// @author       Chris Pittelko
+// @match        https://ring.kustomerapp.com/*
+// @grant        GM_addStyle
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
+// @require      https://raw.githubusercontent.com/EpicChloe/MakeKustomerBetter/master/waitForKeyElements.js
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Update Newer Cards
+    waitForKeyElements (".kviewSmartBarCard__card___7NeSK", updateRightCards);
+
+    GM_addStyle('.kviewSmartBarCard__card___7NeSK {border: #04759F 1px solid}');
+    GM_addStyle('.kviewSmartBarCard__header___2IEV2 {padding: 10px; 0}');
+    GM_addStyle('#shopifyHeader {padding: 10px; 0}');
+    GM_addStyle('#ringAssistCard {height: 900px}');
+
+
+    function updateRightCards(jNode) {
+        jNode.css('height', '40px');
+        jNode.data('visible', false);
+        jNode.css('overflow-y', 'hidden');
+        var headers = jNode.find('.kviewSmartBarCard__header___2IEV2');
+        headers.on('click', function() {
+            if(!headers.parent().data('visible')) {
+                headers.parent().css('height', 'inherit');
+                headers.parent().data('visible', true);
+            } else {
+                headers.parent().css('height', '40px');
+                headers.parent().data('visible', false);
+            }
+        });
+
+        console.log(headers);
+        // Modify Ring Assist Card Height
+        if(headers.text() === 'Ring Assist') {
+            headers.parent().attr('id','ringAssistCard');
+            headers.parent().css('height', '40px');
+        }
+    }
+
+    // Modify Shopify Iframe
+    waitForKeyElements (".smartBarContextCardsOld__oldWrapper___3FxCP", updateShopifyIframe);
+
+    GM_addStyle('.smartBarContextCardsOld__oldWrapper___3FxCP {border: #04759F 1px solid; border-radius: 3px;width: 335px;position: relative;margin: 5px auto 10px;}');
+
+    function updateShopifyIframe(jNode) {
+        jNode.prepend('<div id="shopifyHeader"> -~- <i class="icon mdi shopping"></i>Shopify -~- </div>');
+        jNode.css('height', '40px');
+        jNode.data('visible', false);
+        jNode.css('overflow-y', 'hidden');
+        var headers = $('#shopifyHeader');
+        $('#shopifyHeader').on('click', function() {
+            if(!headers.parent().data('visible')) {
+                headers.parent().css('height', 'inherit');
+                headers.parent().data('visible', true);
+            } else {
+                headers.parent().css('height', '40px');
+                headers.parent().data('visible', false);
+            }
+        });
+    }
+
+})();
+
