@@ -1,0 +1,28 @@
+// ==UserScript==
+// @name         MKB (Make Kustomer Better)
+// @namespace    MKB
+// @version      100
+// @description  Make Kustomer Better
+// @author       Chris Pittelko
+// @match        https://ring.kustomerapp.com/*
+// @grant        GM_addStyle
+// @require      https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
+// @require      https://raw.githubusercontent.com/EpicChloe/MakeKustomerBetter/master/waitForKeyElements.js
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    waitForKeyElements (".kviewSmartBarCard__card___7NeSK", updateRightCards);
+    GM_addStyle('.kviewSmartBarCard__card___7NeSK {border: 3px solid green}');
+
+
+    function updateRightCards(jNode) {
+        jNode.css('height', '40px');
+        jNode.css('overflow-y', 'hidden');
+        jNode.find('.kviewSmartBarCard__header___2IEV2').text('I AM GROOT').on('click', function(this) {
+            this.css('height', 'inherit');
+        });
+        jNode.css('background-color', 'yellow');
+    }
+})();
