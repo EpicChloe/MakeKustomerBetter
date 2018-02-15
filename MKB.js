@@ -1,5 +1,5 @@
 console.log('This is a test');
-console.log('Side Loading MKB.js...);
+console.log('Side Loading MKB.js...');
 $(document).ready(function(){
   console.log('Beginging Load of MKB.js');
   setTimeout(function(){ 
